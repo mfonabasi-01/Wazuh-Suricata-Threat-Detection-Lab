@@ -135,3 +135,71 @@ This investigation correlated the Wazuh security alert with the reconnaissance a
 ![Wazuh alert investigation](images/alert-investigation.png)
 
 *Figure 9 — Detailed Wazuh event investigation showing the source IP, destination IP, protocol, destination port, and monitored network interface.*
+
+## File Integrity Monitoring (FIM)
+
+Wazuh File Integrity Monitoring (FIM) was configured on the Ubuntu endpoint to monitor the `/root` directory in real time.
+
+```xml
+<directories realtime="yes">/root</directories>
+```
+
+This allowed Wazuh to detect file creation and modification events within the monitored directory.
+
+![Wazuh FIM configuration](images/wazuh-fim-config.png)
+
+*Figure 10 — Wazuh File Integrity Monitoring configured to monitor `/root` in real time.*
+
+## VirusTotal Threat Intelligence Integration
+
+VirusTotal was integrated with Wazuh to enrich file integrity events with external threat intelligence.
+
+When a monitored file generated a relevant FIM event, the VirusTotal integration could use the file information to obtain a reputation verdict and return the result to Wazuh for analysis.
+
+![VirusTotal integration](images/virustotal-integration.png)
+
+*Figure 11 — VirusTotal threat intelligence integration configured in Wazuh. API key redacted for security.*
+
+## EICAR Malware Detection Test
+
+The EICAR anti-malware test file was used to safely simulate the introduction of a malicious file onto the monitored Ubuntu endpoint.
+
+The test file was placed inside the monitored directory as:
+
+```text
+/root/eicar.com
+```
+
+Because `/root` was monitored by Wazuh FIM, the file event entered the detection and threat-intelligence workflow.
+
+![EICAR test](images/eicar-test.png)
+
+*Figure 12 — EICAR anti-malware test file introduced into the monitored directory.*
+
+## VirusTotal Detection in Wazuh
+
+Wazuh successfully generated a high-severity VirusTotal alert for the EICAR test file.
+
+The alert identified `/root/eicar.com` as malicious based on detections from multiple VirusTotal security engines and generated Wazuh rule `87105` at alert level `12`.
+
+![VirusTotal Wazuh alert](images/virustotal-alert.png)
+
+*Figure 13 — Wazuh VirusTotal alert generated for the EICAR test file.*
+
+This demonstrated the detection workflow:
+
+**File creation → Wazuh FIM → VirusTotal threat intelligence → Wazuh security alert**
+
+## Threat Intelligence Investigation
+
+The detected file was further investigated using VirusTotal. Multiple security vendors identified the sample as the EICAR anti-malware test file.
+
+![VirusTotal analysis](images/virustotal-analysis.png)
+
+*Figure 14 — VirusTotal security vendor analysis of the EICAR test file.*
+
+File details and cryptographic hashes provided additional indicators that could be used to identify and correlate the sample during an investigation.
+
+![VirusTotal file details](images/virustotal-file-details.png)
+
+*Figure 15 — VirusTotal file information and cryptographic hashes associated with the EICAR test sample.*
