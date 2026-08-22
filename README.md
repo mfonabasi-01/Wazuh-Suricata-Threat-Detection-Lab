@@ -203,3 +203,42 @@ File details and cryptographic hashes provided additional indicators that could 
 ![VirusTotal file details](images/virustotal-file-details.png)
 
 *Figure 15 — VirusTotal file information and cryptographic hashes associated with the EICAR test sample.*
+
+## Results
+
+The lab successfully demonstrated:
+
+- Detection of Nmap reconnaissance traffic using Suricata
+- Centralized Suricata alert monitoring in Wazuh
+- Investigation of network security events
+- Identification of source and destination systems, protocols, and targeted services
+- Real-time File Integrity Monitoring with Wazuh
+- Integration of VirusTotal threat intelligence
+- Detection and analysis of the EICAR anti-malware test file
+- Generation of a high-severity VirusTotal alert in Wazuh
+- Use of file hashes and security-vendor verdicts during threat investigation
+
+The project demonstrated a security monitoring workflow across both network and endpoint telemetry:
+
+**Simulate → Detect → Centralize → Investigate → Enrich**
+
+## Skills Demonstrated
+
+- Security Operations Center (SOC) monitoring
+- SIEM monitoring and investigation
+- Network intrusion detection
+- Network traffic analysis
+- Alert triage and investigation
+- File Integrity Monitoring (FIM)
+- Threat intelligence integration
+- Indicator and file-hash analysis
+- Security event correlation
+- Linux administration
+- Detection engineering
+- Security troubleshooting
+
+## Technologies Used
+
+`Wazuh` • `Suricata` • `VirusTotal` • `Nmap` • `Kali Linux` • `Ubuntu Linux`
+
+
